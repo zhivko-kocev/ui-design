@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Font</title>
+  <link rel="stylesheet" href="../jquery/jquery-ui.css">
+  <script src="../jquery/jquery.js"></script>
+  <script src="../jquery/jquery-ui.js"></script>
+</head>
+<body>
+<div id="app">
+  <p>Font Size</p>
+  <button id="init">Initial</button>
+  <button id="incr">Increase</button>
+  <button id="decr">Decrease</button>
+</div>
+<p id="txt">Донирај компјутер е непрофитерска невладина организација чија цел е секое
+  семејство во Македонија да има по барем еден компјутер бидејки компјутерот е
+  потребна алатка за учење, а не луксуз. Веќе 6 години се вршат донации на
+  половни компјутери низ територијата на цела Македонија и на над 2600 семејства
+  им е обезбеден компјутер. </p>
+</body>
+<style>
+  #app{
+    background-color: #1c94c4;
+    display: inline-block;
+    width: 300px;
+    height: 100px;
+  }
+  #app p{
+    font-size: 30px;
+    font-weight: bold;
+    margin: 0 0 10px 78px;
+  }
+  #app button{
+    margin-left: 24px;
+  }
+</style>
+<script>
+  var startSize=parseInt($("#txt").css('font-size'))
+  $("#incr").click(function () {
+    $("#txt").animate({
+      'fontSize':startSize * 1.5
+    },1000)
+  })
+  $("#decr").click(function (){
+    $("#txt").animate({
+      'fontSize':startSize - startSize * 0.5
+    },1000)
+  })
+  $("#init").click(function () {
+    $("#txt").animate({
+      'fontSize':startSize
+    },1000)
+  })
+</script>
+</html>

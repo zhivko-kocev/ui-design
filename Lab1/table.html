@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Table</title>
+  <link rel="stylesheet" href="../jquery/jquery-ui.css">
+  <script src="../jquery/jquery.js"></script>
+  <script src="../jquery/jquery-ui.js"></script>
+</head>
+<body>
+<table>
+  <tr>
+    <td> Car Registration Plates </td>
+    <td> Brand </td>
+    <td> Color </td>
+  </tr>
+  <tr>
+    <td>SK-9000-AC</td>
+    <td>Alfa Romeo</td>
+    <td> Black </td>
+  </tr>
+  <tr>
+    <td>VE-8000-AB</td>
+    <td>Toyota Yaris</td>
+    <td>White</td>
+  </tr>
+  <tr>
+    <td>KO-7000-AD</td>
+    <td>Renault Meganne</td>
+    <td>Black</td>
+  </tr>
+  <tr>
+    <td>PP-6000-AC</td>
+    <td>Mercedes</td>
+    <td>Red</td>
+  </tr>
+  <tr>
+    <td>BT-5000-AB</td>
+    <td>BMW</td>
+    <td>Grey</td>
+  </tr>
+  <tr>
+    <td>SN-4000-AC</td>
+    <td>Peugeot</td>
+    <td>Yellow</td>
+  </tr>
+</table>
+</body>
+<style>
+  .color {
+    font-weight:bold;
+    color: #FF0000;
+  }
+  .border {
+    background-color: #ccc;
+  }
+  tr td{
+    padding-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 40px;
+  }
+</style>
+<script>
+  $(document).ready(function () {
+      $("table tr td:nth-child(odd)").addClass("border")
+    $("table tr:nth-child(odd)").addClass("color")
+  })
+</script>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Counter</title>
+    <link rel="stylesheet" href="../jquery/jquery-ui.css">
+    <script src="../jquery/jquery.js"></script>
+    <script src="../jquery/jquery-ui.js"></script>
+</head>
+<body>
+<div id="cnt"></div>
+</body>
+<script>
+    $(document).ready(setInterval(function (){
+        let momDate=new Date()
+        let finalDate=new Date()
+        finalDate.setHours(23)
+        finalDate.setMinutes(59)
+        finalDate.setSeconds(59)
+        let left=(finalDate-momDate)/1000
+        let hours=Math.floor(left/3600)
+        let minutes=Math.floor(left%3600/60)
+        let seconds=left%3600%60
+        $("#cnt").text(`${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`)
+
+    },1000))
+
+</script>
+</html>

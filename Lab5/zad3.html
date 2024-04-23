@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/jquery/jquery-ui.css" />
+    <script src="/jquery/jquery.js"></script>
+    <script src="/jquery/jquery-ui.js"></script>
+    <title>Task 3</title>
+    <style>
+      #input {
+        margin-bottom: 10px;
+      }
+      button {
+        margin-bottom: 10px;
+      }
+      ul {
+        padding: 0;
+        list-style: none;
+      }
+      li {
+        width: 200px;
+        border: 1px solid black;
+      }
+      label {
+        background-color: greenyellow;
+      }
+      .ui-selected {
+        background-color: greenyellow;
+      }
+    </style>
+  </head>
+  <body>
+    <p>New Item:</p>
+    <input type="text" id="input" />
+    <div>
+      <button id="add">Add new item</button>
+      <button id="delete">Delete selected items</button>
+    </div>
+    <label>Selected items: </label>
+    <div id="content"></div>
+    <ul id="items">
+      <li>Item 1</li>
+      <li>Item 2</li>
+      <li>Item 3</li>
+    </ul>
+    <script>
+      $(document).ready(function () {
+        $("#delete").click(function () {
+          $("#content").html("");
+          $("#items")
+            .children()
+            .each((index, item) => {
+              $(item).removeClass("ui-selected");
+            });
+        });
+        $("#add").click(function () {
+          let item = $("#input").val();
+          if (item) {
+            $("#items").append($("<li>").append(item));
+          } else {
+            alert("Please enter valid item!");
+          }
+        });
+        $("#items")
+          .bind("mousedown", function (e) {
+            e.metaKey = true;
+          })
+          .selectable({
+            autoRefresh: false,
+            selected: function (event, ui) {
+              let span = $("<span>")
+                .attr("class", "" + $(ui.selected).attr("class") + "")
+                .html($(ui.selected).html());
+              $("#content").append(span[0]).append(" ");
+            },
+            unselected: function (event, ui) {
+              $("#content")
+                .children()
+                .each((index, item) => {
+                  if ($(item).html() == $(ui.unselected).html()) {
+                    $(item).remove();
+                  }
+                });
+            },
+          });
+      });
+    </script>
+  </body>
+</html>

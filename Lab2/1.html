@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tab</title>
+    <link rel="stylesheet" href="../jquery/jquery-ui.css" />
+    <script src="../jquery/jquery.js"></script>
+    <script src="../jquery/jquery-ui.js"></script>
+  </head>
+  <body>
+    <div id="buttons">
+      <div>
+        <button title="tab1">Open start</button>
+        <button title="tab2">Connect</button>
+        <button title="tab3">Pin apps</button>
+      </div>
+    </div>
+    <div id="content">
+      <div id="tab1">Some text1........</div>
+      <div id="tab2">Some text2........</div>
+      <div id="tab3">Some text3........</div>
+    </div>
+  </body>
+  <style>
+    #buttons {
+      display: flex;
+      width: 600px;
+      height: 200px;
+      background-color: #b81900;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #buttons div > button {
+      padding: 10px;
+      margin: 10px;
+    }
+
+    #content {
+      width: 600px;
+      height: 300px;
+      background-color: darkslategray;
+    }
+    #content > div {
+      color: white;
+      font-size: 20px;
+    }
+  </style>
+  <script>
+    $(document).ready(function () {
+      $("#content > div").toggle();
+      $("#buttons div > button").click(function () {
+        let id = $(this).attr("title");
+        $("#" + id)
+          .siblings()
+          .hide();
+
+        $("#" + id).show();
+      });
+    });
+  </script>
+</html>

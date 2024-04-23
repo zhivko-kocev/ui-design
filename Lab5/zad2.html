@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Task</title>
+    <meta content="charset=utf-8" />
+    <link rel="stylesheet" href="/jquery/jquery-ui.css" />
+    <script src="/jquery/jquery.js"></script>
+    <script src="/jquery/jquery-ui.js"></script>
+    <style>
+      .container {
+        width: 300px;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+      #hobbies {
+        list-style: none;
+        padding: 0;
+      }
+      #hobbies li {
+        width: 200px;
+        height: 30px;
+        border: 1px solid black;
+        margin-bottom: 5px;
+      }
+      .ui-selected {
+        background-color: orange;
+      }
+      .inline {
+        display: inline-block;
+      }
+      .error {
+        color: red;
+      }
+      #dialog {
+        width: 400px;
+      }
+      #dialog p {
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="inline">
+      <div class="container">
+        <label for="name">Name:</label>
+        <input type="text" id="name" placeholder="Name..." />
+      </div>
+    </div>
+    <span class="error">Insert your name!</span>
+    <br />
+    <div class="inline">
+      <div class="container">
+        <label for="surname">Surname:</label>
+        <input type="text" id="surname" placeholder="Surname..." />
+      </div>
+    </div>
+    <span class="error">Insert your surname!</span>
+    <br />
+    <div class="inline">
+      <div class="container">
+        <label for="password">Password:</label>
+        <input type="text" id="password" placeholder="Password..." />
+      </div>
+    </div>
+    <span class="error">Insert your password!</span>
+    <br />
+    <div class="inline">
+      <div class="container">
+        <label for="date">DateOfBirth:</label>
+        <input type="text" id="date" placeholder="Date.." />
+      </div>
+    </div>
+    <span class="error">Insert your date!</span>
+    <br />
+    <div class="inline">
+      <h3>Select your hobbies:</h3>
+      <ul id="hobbies">
+        <li class="hobby">Gaming</li>
+        <li class="hobby">Sports</li>
+        <li class="hobby">Watching tv</li>
+        <li class="hobby">Sleeping</li>
+        <li class="hobby">Hiking</li>
+        <li class="hobby">Skiing</li>
+        <li class="hobby">Dancing</li>
+      </ul>
+    </div>
+    <br />
+    <button id="add">Add my info</button>
+    <div id="dialog">
+      <div>
+        <p>Name:</p>
+        <span id="name_dialog"></span>
+      </div>
+      <div>
+        <p>Surname:</p>
+        <span id="surname _dialog"></span>
+      </div>
+      <div>
+        <p>Password:</p>
+        <span id="password_dialog"></span>
+      </div>
+      <div>
+        <p>DateOfBirth:</p>
+        <span id="date_dialog"></span>
+      </div>
+      <div>
+        <p>Hobbies:</p>
+        <span id="hobbies_dialog"></span>
+      </div>
+    </div>
+    <script>
+      $("#dialog").dialog({
+        autoOpen: false,
+        modal: true,
+        title: "User Info",
+      });
+      $(document).ready(function () {
+        $(".error").toggle();
+        $("#date").datepicker();
+        $("#hobbies")
+          .bind("mousedown", function (e) {
+            e.metaKey = true;
+          })
+          .selectable({
+            selected: function (event, ui) {
+              console.log(ui.selected);
+            },
+          });
+        $("#add").click(function () {
+          let name = $("#name").val();
+          let surname = $("#surname").val();
+          let pass = $("#password").val();
+          let date = $("#date").val();
+          let hobbies = $("#hobbies li").filter(
+            (index, item) =>
+              $(item).attr("class") == "hobby ui-selectee ui-selected"
+          );
+          console.log(hobbies);
+          if (name && surname && pass && date) {
+            $(".error").hide();
+            $("#dialog").dialog("open");
+            $("#name_dialog").html(name);
+            $("#surname_dialog").html(name);
+            $("#password_dialog").html(name);
+            $("#date_dialog").html(name);
+            $(hobbies).each((index, item) => {
+              $("#hobbies_dialog").append($(item).html() + " ");
+            });
+          } else {
+            $("#name").css("border", "3px solid red");
+            $("#surname").css("border", "3px solid red");
+            $("#password").css("border", "3px solid red");
+            $("#date").css("border", "3px solid red");
+            $("span").show();
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

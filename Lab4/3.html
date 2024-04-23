@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Задача 2</title>
+    <link
+      rel="stylesheet"
+      href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"
+    />
+    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+  </head>
+  <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 500px;
+    }
+    td,
+    th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    th {
+      background-color: lightgray;
+    }
+    button {
+      margin-top: 40px;
+    }
+  </style>
+  <body>
+    <h1>Flights:</h1>
+    <table id="content">
+      <tr>
+        <th>Cde</th>
+        <th>Airline</th>
+        <th>To</th>
+        <th>Class</th>
+      </tr>
+    </table>
+    <button id="add">Add new flight</button>
+    <div id="modal">
+      <p>All fields are mandatory!</p>
+      <br />
+      <h3>Code</h3>
+      <input type="text" id="code" />
+      <h3>Airline</h3>
+      <input type="text" id="airline" />
+      <h3>To</h3>
+      <input type="text" id="to" />
+      <h3>Class</h3>
+      <select name="class" id="class">
+        <option value="business">Business</option>
+        <option value="economy">Economy</option>
+        <option value="vip">VIP</option>
+      </select>
+    </div>
+  </body>
+  <script>
+    $(document).ready(() => {
+      $("#modal").dialog({
+        autoOpen: false,
+        title: "Create new flight",
+        modal: true,
+        buttons: [
+          {
+            text: "Add",
+            click: function () {
+              let code = $("#code").val();
+              let airline = $("#airline").val();
+              let to = $("#to").val();
+              let clas = $("#class").val();
+              if (code && airline && to && clas) {
+                $(
+                  "<tr><td>" +
+                    code +
+                    "</td><td>" +
+                    airline +
+                    "</td><td>" +
+                    to +
+                    "</td><td>" +
+                    clas +
+                    "</td></tr>"
+                ).appendTo($("#content"));
+                $("#code").val("");
+                $("#airline").val("");
+                $("#to").val("");
+                $("#class").val("");
+                $(this).dialog("close");
+              } else {
+                alert("Please enter all the fields!");
+              }
+            },
+          },
+          {
+            text: "Close",
+            click: function () {
+              $(this).dialog("close");
+            },
+          },
+        ],
+        resizable: true,
+      });
+      $("#add").click(() => {
+        $("#modal").dialog("open");
+      });
+    });
+  </script>
+</html>

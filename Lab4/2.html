@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Задача 2</title>
+    <link
+      rel="stylesheet"
+      href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"
+    />
+    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+  </head>
+  <body>
+    <p>Date: <input type="text" id="datepicker" /></p>
+    <script>
+      $(document).ready(() => {
+        $("#datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          beforeShowDay: (date) => {
+            var days = new Date(
+              date.getFullYear(),
+              date.getMonth() + 1,
+              0
+            ).getDate();
+            return [
+              days % 2 == 0 ? date.getDate() % 2 == 0 : date.getDate() % 2 != 0,
+              "",
+            ];
+          },
+        });
+      });
+    </script>
+  </body>
+</html>

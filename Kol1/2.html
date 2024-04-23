@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../jquery/jquery-ui.css">
+    <script src="../jquery/jquery.js"></script>
+    <script src="../jquery/jquery-ui.js"></script>
+</head>
+<body>
+<div id="titles">
+    <div id="0" class="title"><h1>Shoes</h1></div>
+    <div id="1" class="title"><h1>Clothes</h1></div>
+    <div id="2" class="title"><h1>Watches</h1></div>
+    <div id="3" class="title"><h1>Home products</h1></div>
+</div>
+<div id="content">
+    <div><h1 id="main_title">Title here....</h1></div>
+    <div id="pictures"></div>
+    <div id="accordion">
+        <div>
+          <h3>Contact</h3>
+            <p>Text here...</p>
+        </div>
+        <div>
+            <h3>Catalogue</h3>
+            <p>Text heere...</p>
+        </div>
+        <div>
+            <h3>Places</h3>
+            <p>Text here...</p>
+        </div>
+    </div>
+
+</div>
+</body>
+<style>
+    #titles {
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    .title {
+        display: inline-block;
+        background-color: darkred;
+        color: white;
+        padding: 10px;
+        cursor: pointer;
+    }
+    #pictures{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .row{
+        display: flex;
+        flex-direction: row;
+    }
+    .item{
+        display: inline-block;
+        background-color: darkred;
+        width: 200px;
+        height: 200px;
+        margin: 10px;
+        border: none;
+    }
+    .item:hover{
+        border: 4px solid black;
+    }
+    #content{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+<script>
+    data=[
+        {
+            title:"Shoes",
+            items:["Shoes1","Shoes2","Shoes3","Shoes4","Shoes5","Shoes6","Shoes7","Shoes8"]
+        },
+        {
+            title: "Clothes",
+            items: ["Clothes1","Clothes2","Clothes3","Clothes4","Clothes5","Clothes6"]
+        },
+        {
+            title: "Watches",
+            items:["Watches1","Watches2","Watches3","Watches4"]
+        },
+        {
+            title: "Home",
+            items:["Home1","Home2","Home3","Home4","Home5","Home6","Home7","Home8","Home9","Home10","Home11","Home12"]
+        }
+    ]
+    $(document).ready(function () {
+        $("#content").toggle()
+        $("#accordion").accordion({
+            "header":"h3",
+            active:false,
+            collapsible:true
+        })
+
+        $("#titles > div").click(function () {
+            let position=$(this).attr('id')
+            let title=data[position].title
+            let items=data[position].items
+            $("#main_title").html(title)
+            $("#pictures").html("")
+
+            let rows=Math.floor(Math.sqrt(items.length))
+            let columns=Math.floor(items.length/rows)
+            let index=0;
+            for (let i = 0; i < rows; i++) {
+                let div_row=document.createElement('div')
+                div_row.setAttribute('class','row')
+                for (let j = 0; j < columns; j++) {
+                    let item=document.createElement('div')
+                    item.setAttribute('class','item')
+                    item.innerHTML+=items[index++]
+                    div_row.append(item)
+                }
+                $("#pictures").append(div_row)
+            }
+            $("#content").show()
+        })
+
+    })
+
+
+
+</script>
+</html>

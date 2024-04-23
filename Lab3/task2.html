@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="jquery/jquery-ui.css" />
+    <script src="jquery/jquery.js"></script>
+    <script src="jquery/jquery-ui.js"></script>
+  </head>
+  <body>
+    <div id="content">
+      <div id="headings">
+        <ul class="list">
+          <li class="title" value="0">Medicine</li>
+          <li class="title" value="1">Education</li>
+          <li class="title" value="2">Accounting</li>
+          <li class="title" value="3">Games</li>
+        </ul>
+      </div>
+      <div id="data"></div>
+      <div class="accordion" id="acc">
+        <h3>Team</h3>
+        <div class="accordion">
+          <h3>Albert Einstein</h3>
+          <div>...</div>
+          <h3>Alan Turing</h3>
+          <div>...</div>
+          <h3>Archimedes</h3>
+          <div>...</div>
+        </div>
+
+        <h3>Locations</h3>
+        <div class="accordion">
+          <h3>Skopje</h3>
+          <div>...</div>
+          <h3>Prilep</h3>
+          <div>...</div>
+          <h3>Veles</h3>
+          <div>...</div>
+        </div>
+        <h3>Contact</h3>
+        <div class="accordion">
+          <h3>st Esenes 24/5 1000 Skopje</h3>
+          <div>...</div>
+          <h3>+38921234567</h3>
+          <div>...</div>
+          <h3>finkiit@iaispit.com</h3>
+          <div>...</div>
+        </div>
+      </div>
+    </div>
+    <script>
+      var data = [
+        {
+          categories: ["MedIm", "MedIA", "FINKI-Med"],
+        },
+        {
+          categories: ["FINKI-Edu", "Edu-Buddy", "FINKI-LE", "FINKI-Math"],
+        },
+        {
+          categories: ["eTax", "FINKI-Tax", "Tax-All", "mySalary"],
+        },
+        {
+          categories: ["FINKI-game", "Grelima", "Edaolith", "Foessa", "Jeroen"],
+        },
+      ];
+      $(document).ready(function () {
+        $(".accordion").accordion({
+          title: "h3",
+          active: false,
+          collapsible: true,
+          heightStyle: "content",
+          widthStyle: "content",
+        });
+
+        $(".title").click(function () {
+          $(this).css("background-color", "darkred");
+          $(this).siblings("li").css("background-color", "black");
+          let cat = data[this.value].categories;
+          $("#data").html("");
+          for (let i = 0; i < cat.length; i++) {
+            $("#data").append("<div class='item'>" + cat[i] + "</div>");
+          }
+        });
+      });
+    </script>
+  </body>
+  <style>
+    #content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .list {
+      display: flex;
+      list-style: none;
+      gap: 10px;
+      justify-content: space-evenly;
+    }
+    #headings {
+      width: 900px;
+    }
+    .title {
+      font-size: 50px;
+      background-color: black;
+      color: white;
+      border: 1px solid black;
+      border-radius: 5%;
+      padding: 10px;
+      cursor: pointer;
+    }
+    #data {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    .item {
+      width: 100px;
+      height: 30px;
+      background-color: darkred;
+      color: white;
+      text-align: center;
+      padding-top: 10px;
+      cursor: pointer;
+      border: 1px solid darkred;
+      border-radius: 10%;
+    }
+    #acc {
+      position: fixed;
+      bottom: 15px;
+    }
+  </style>
+</html>

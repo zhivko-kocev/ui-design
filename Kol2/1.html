@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/jquery/jquery-ui.css" />
+    <script src="/jquery/jquery.js"></script>
+    <script src="/jquery/jquery-ui.js"></script>
+    <style>
+      #content {
+        display: flex;
+        justify-content: space-evenly;
+      }
+      div {
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content">
+      <div>
+        <ul id="2016"></ul>
+      </div>
+      <div>
+        <ul id="2017"></ul>
+      </div>
+      <div>
+        <ul id="fav">
+          <li id="test" class="item ui-state-disabled">Add your fav</li>
+        </ul>
+      </div>
+    </div>
+  </body>
+  <script>
+    $(document).ready(function () {
+      getData(2016);
+      getData(2017);
+      $("#2016").sortable({
+        connectWith: "#fav",
+        cancel: ".ui-state-disabled",
+      });
+      $("#2017").sortable({
+        connectWith: "#fav",
+        cancel: ".ui-state-disabled",
+      });
+      $("#fav").sortable({
+        connectWith: "#2016,#2017",
+        cancel: ".ui-state-disabled",
+        receive: function (event, ui) {
+          $("#test").hide();
+        },
+      });
+
+      function getData(year) {
+        $.ajax({
+          url: "https://ergast.com/api/f1/" + year + "/drivers.json",
+          dataType: "json",
+          success: function (data) {
+            $.each(
+              data["MRData"]["DriverTable"]["Drivers"],
+              function (index, item) {
+                $("<li>")
+                  .append(item.givenName + " " + item.familyName)
+                  .appendTo("#" + year);
+              }
+            );
+          },
+        });
+      }
+    });
+  </script>
+</html>

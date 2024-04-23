@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/jquery/jquery-ui.css" />
+    <script src="/jquery/jquery.js"></script>
+    <script src="/jquery/jquery-ui.js"></script>
+    <title>Task 1</title>
+    <style>
+      #buttons {
+        margin-top: 20px;
+      }
+      #content {
+        height: 300px;
+        width: 300px;
+        background-color: greenyellow;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>New message:</h1>
+    <h3>To:</h3>
+    <input type="text" id="to" />
+    <h3>Cc:</h3>
+    <input type="text" id="cc" />
+    <h3>Subject:</h3>
+    <input type="text" id="subject" />
+    <h3>Content:</h3>
+    <div id="content"></div>
+    <div id="buttons">
+      <button id="insert">Insert</button>
+      <button id="send">Send</button>
+    </div>
+    <div id="login">
+      <p>New password:</p>
+      <input type="password" id="new_pass" />
+      <p>Repeat password:</p>
+      <input type="password" id="check_pass" />
+    </div>
+    <div id="insert_dialog">
+      <p>To: <span id="to_dialog"></span></p>
+      <p>Subject: <span id="subject_dialog"></span></p>
+      <p>Cc: <span id="cc_dialog"></span></p>
+      <br />
+      <p>Content:</p>
+      <textarea
+        id="content_dialog"
+        cols="30"
+        rows="10"
+        placeholder="Write something..."
+      ></textarea>
+      <div>
+        <button id="add_content">Insert</button>
+        <button id="clear_content">Clear</button>
+      </div>
+    </div>
+    <div id="send_message">
+      <p>Password:</p>
+      <input type="password" id="final_check" />
+    </div>
+    <script>
+      $(document).ready(function () {
+        var pw, check;
+        $("#send_message").dialog({
+          autoOpen: false,
+          modal: true,
+          closeOnEscape: false,
+          open: function (event, ui) {
+            $(".ui-dialog-titlebar-close", $(this).parent()).hide();
+          },
+          width: 450,
+          buttons: [
+            {
+              text: "OK",
+              click: function () {
+                if ($("#final_check").val() == pw) {
+                  $("#to").val("");
+                  $("#subject").val("");
+                  $("#cc").val("");
+                  $("#content").html("");
+                  $("#to_dialog").html("");
+                  $("#subject_dialog").html("");
+                  $("#cc_dialog").html("");
+                  $("#content_dialog").val("");
+                  $(this).dialog("close");
+                } else {
+                  alert("Wrong password!    ");
+                }
+              },
+            },
+          ],
+        });
+        $("#insert_dialog").dialog({
+          autoOpen: false,
+          modal: true,
+          closeOnEscape: false,
+          open: function (event, ui) {
+            $(".ui-dialog-titlebar-close", $(this).parent()).hide();
+          },
+          width: 500,
+        });
+        $("#login").dialog({
+          autoOpen: true,
+          modal: true,
+          closeOnEscape: false,
+          open: function (event, ui) {
+            $(".ui-dialog-titlebar-close", $(this).parent()).hide();
+          },
+          buttons: [
+            {
+              text: "OK",
+              click: function () {
+                pw = $("#new_pass").val();
+                check = $("#check_pass").val();
+                if (pw && check) {
+                  if (pw === check) {
+                    $(this).dialog("close");
+                  } else {
+                    $("#new_pass").val("");
+                    $("#check_pass").val("");
+                    pw = "";
+                    check = "";
+                    alert("Passwords don't match!");
+                  }
+                } else {
+                  $("#new_pass").val("");
+                  $("#check_pass").val("");
+                  pw = "";
+                  check = "";
+                  alert("Please enter your password!");
+                }
+              },
+            },
+          ],
+        });
+        $("#insert").click(function () {
+          let to = $("#to").val();
+          let subject = $("#subject").val();
+          let cc = $("#cc").val();
+          let content = $("#content").html();
+          if (to) {
+            $("#to_dialog").html(to);
+            $("#subject_dialog").html(subject);
+            $("#cc_dialog").html(cc);
+            $("#insert_dialog").dialog("open");
+            $("#content_dialog").val(content);
+          } else {
+            alert("Please enter who are you sending to!");
+          }
+        });
+        $("#add_content").click(function () {
+          $("#content").html($("#content_dialog").val());
+          $("#insert_dialog").dialog("close");
+        });
+        $("#clear_content").click(function () {
+          $("#content_dialog").val("");
+        });
+        $("#send").click(function () {
+          if ($("#to").val() && $("#content").html()) {
+            $("#send_message").dialog("open");
+          } else {
+            alert("Please fill the form!");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

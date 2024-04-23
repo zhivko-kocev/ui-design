@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>XFactor</title>
+    <link rel="stylesheet" href="../jquery/jquery-ui.css">
+    <script src="../jquery/jquery.js"></script>
+    <script src="../jquery/jquery-ui.js"></script>
+</head>
+<body>
+<div id="audition">
+<div id="labels">
+    <p>Name</p>
+    <p>Artistic name</p>
+    <p>Sex</p>
+    <p>Genre</p>
+
+</div>
+<div id="content">
+
+    <div><input type="text" id="name" class="box"></div>
+
+    <div><input type="text" id="a_name" class="box"></div>
+    <div>
+        <input type="radio" id="male" name="sex" value="m"><label for="male">Male</label>
+        <input type="radio" id="female" name="sex" value="f"><label for="female">Female</label>
+
+    </div>
+
+    <div id="genre">
+    <select id="get_genre">
+        <option>Classical</option>
+        <option>Rock</option>
+        <option>Pop</option>
+        <option>Rap</option>
+        <option>Jazz</option>
+        <option>Blues</option>
+    </select>
+    </div>
+
+</div>
+</div>
+<button id="apply">Apply</button>
+<p id="select_error"></p>
+<div id="dialog"></div>
+</body>
+<style>
+    #content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        padding-left: 20px;
+    }
+
+    #labels {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly   ;
+
+    }
+    #labels p{
+        margin: 0;
+    }
+    #audition{
+        display: flex;
+        height: 200px;
+    }
+</style>
+<script>
+    $("#apply").click(function (){
+        let name=$("#name").val()
+        let a_name=$("#a_name").val()
+        let sex=($("#male").prop("checked",true))? "Male":($("#female").prop("checked",true))? "Female" : "Not Selected"
+        let genre=$("#get_genre").val()
+        if (name.length>0 && a_name.length>0 && sex.length>0 && genre.length>0){
+            $("#dialog").dialog({
+                dialogClass: "no-close",
+                draggable:false,
+                modal:true,
+                width:"350",
+                height:300,
+                buttons:[
+                    {
+                        text:"Apply again",
+                        click:function () {
+                            $("#name").val("")
+                            $("#a_name").val("")
+                            $("#get_genre").val("")
+                            $("#dialog").dialog("close")
+                        }
+                    }
+                ],
+            },"open").html(`${name}, ${sex}, ${genre} - successfully applied.`).css("font-size","30px").show()
+
+        }else{
+            $("#select_error").html("All fields are required")
+        }
+    })
+</script>
+</html>

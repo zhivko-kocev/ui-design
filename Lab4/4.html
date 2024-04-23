@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Задача 2</title>
+    <link
+      rel="stylesheet"
+      href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"
+    />
+    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+  </head>
+  <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 500px;
+    }
+    td,
+    th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    th {
+      background-color: lightgray;
+    }
+    button {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+    #bookings {
+      margin-top: 20px;
+    }
+  </style>
+  <body>
+    <h1>Flights:</h1>
+    <table id="content">
+      <tr>
+        <th>Code</th>
+        <th>Airline</th>
+        <th>To</th>
+        <th>Class</th>
+      </tr>
+    </table>
+    <button id="add">Add new flight</button>
+    <div id="modal">
+      <p>All fields are mandatory!</p>
+      <br />
+      <h3>Code</h3>
+      <input type="text" id="code" />
+      <h3>Airline</h3>
+      <input type="text" id="airline" />
+      <h3>To</h3>
+      <input type="text" id="to" />
+      <h3>Class</h3>
+      <select name="class" id="class">
+        <option value="business">Business</option>
+        <option value="economy">Economy</option>
+        <option value="vip">VIP</option>
+      </select>
+    </div>
+    <p>Search:</p>
+    <input type="text" id="search" autocomplete="true" />
+    <p>Date from:</p>
+    <input type="text" id="date_from" />
+    <p>Date to:</p>
+    <input type="text" id="date_to" />
+    <div>
+      <button>Book flight</button>
+    </div>
+
+    <table id="bookings">
+      <tr>
+        <th>Code</th>
+        <th>Airline</th>
+        <th>To</th>
+        <th>Class</th>
+        <th>Date from</th>
+        <th>Date to</th>
+      </tr>
+    </table>
+  </body>
+  <script>
+    var data = [
+      { label: "anders", category: "" },
+      { label: "andreas", category: "" },
+      { label: "antal", category: "" },
+      { label: "annhhx10", category: "Products" },
+      { label: "annk K12", category: "Products" },
+      { label: "annttop C13", category: "Products" },
+      { label: "anders andersson", category: "People" },
+      { label: "andreas andersson", category: "People" },
+      { label: "andreas johnson", category: "People" },
+    ];
+    $(document).ready(() => {
+      $.widget("custom.catcomplete", $.ui.autocomplete, {
+        _renderMenu: function (ul, items) {
+          var that = this,
+            currentCategory = "";
+          $.each(items, function (index, item) {
+            if (item.category != currentCategory) {
+              ul.append(
+                "<li class='ui-autocomplete-category'>" +
+                  item.category +
+                  "</li>"
+              );
+              currentCategory = item.category;
+            }
+            that._renderItemData(ul, item);
+          });
+        },
+      });
+      $("#modal").dialog({
+        autoOpen: false,
+        title: "Create new flight",
+        modal: true,
+        buttons: [
+          {
+            text: "Add",
+            click: function () {
+              let code = $("#code").val();
+              let airline = $("#airline").val();
+              let to = $("#to").val();
+              let clas = $("#class").val();
+              console.log(code + " " + airline + " " + to + " " + clas);
+              if (code && airline && to && clas) {
+                $(
+                  "<tr><td>" +
+                    code +
+                    "</td><td>" +
+                    airline +
+                    "</td><td>" +
+                    to +
+                    "</td><td>" +
+                    clas +
+                    "</td></tr>"
+                ).appendTo($("#content"));
+                $("#code").val("");
+                $("#airline").val("");
+                $("#to").val("");
+                $("#class").val("");
+                $(this).dialog("close");
+              } else {
+                alert("Please enter all the fields!");
+              }
+            },
+          },
+          {
+            text: "Close",
+            click: function () {
+              $(this).dialog("close");
+            },
+          },
+        ],
+        resizable: true,
+      });
+      $("#add").click(() => {
+        $("#modal").dialog("open");
+      });
+      $("#date_from").datepicker();
+      $("#date_to").datepicker();
+
+      $("#search").catcomplete({
+        delay: 0,
+        source: data,
+      });
+    });
+  </script>
+</html>

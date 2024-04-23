@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../jquery/jquery-ui.css">
+    <script src="../jquery/jquery.js"></script>
+    <script src="../jquery/jquery-ui.js"></script>
+</head>
+<body>
+<div id="titles">
+    <div id="0" class="title"><h1>Compact Digital Cameras</h1></div>
+    <div id="1" class="title"><h1>DSLR Cameras</h1></div>
+    <div id="2" class="title"><h1>Speedlite Flashes</h1></div>
+</div>
+<div id="content">
+    <div id="home"><h1>Home</h1></div>
+    <div id="header"><h1>Text here</h1></div>
+    <div id="pictures">Pictures here..</div>
+    <div id="accordion">Accordion here..</div>
+</div>
+</body>
+<style>
+    img{
+        display:block;
+        margin:auto;
+        width:100%;
+        height:120px;
+
+    }
+    #home{
+        display: inline-block;
+        background-color: darkred;
+        cursor: pointer;
+        margin-bottom: 10px;
+
+    }
+    #home>h1{
+        color: white;
+        padding: 10px;
+    }
+    .item{
+        width: 300px;
+        height: 300px;
+        display: flex;
+        flex-direction: column;
+        margin: 10px;
+        vertical-align: top;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid black;
+    }
+    #content{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    #header{
+        width: 300px;
+        height: 100px;
+        background-color:darkred;
+        text-align: center;
+        color: white;
+        margin-bottom: 40px;
+    }
+    #pictures{
+        width: 1200px;
+        height: 500px;
+        display: flex;
+    }
+    .title {
+        display: inline-block;
+        background-color: darkred;
+        cursor: pointer;
+    }
+
+    .title > h1 {
+        color: white;
+        padding: 10px;
+
+    }
+
+    #titles {
+        display: flex;
+        justify-content: space-evenly;
+    }
+    .image{
+        background-size: contain;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $("#content").toggle()
+
+        $("#titles > div").click(function () {
+            let position=(this).id
+            let title=data[position].title
+            let urls=data[position].urls
+            $("#pictures").html("")
+            $("#header >h1").html(title);
+            for (let i = 0; i <urls.length ; i++) {
+
+            }
+
+
+
+
+
+            $("#content").toggle()
+            $("#titles").toggle()
+        })
+        $("#home").click(function () {
+            $("#content").toggle()
+            $("#titles").toggle()
+        })
+    })
+</script>
+</html>

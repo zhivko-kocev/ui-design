@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Book</title>
+    <link rel="stylesheet" href="/jquery/jquery-ui.css" />
+    <script src="/jquery/jquery.js"></script>
+    <script src="/jquery/jquery-ui.js"></script>
+  </head>
+  <body>
+    <button id="add">ADD</button>
+    <br />
+    <p id="title_text"></p>
+    <p id="author_text"></p>
+    <p id="comment_text"></p>
+    <div id="dialog">
+      <input id="title" type="text" placeholder="Title..." />
+      <input id="author" type="text" placeholder="Author..." />
+      <input id="comment" type="text" placeholder="Comment..." />
+      <p id="error"></p>
+    </div>
+  </body>
+  <script>
+    $(document).ready(function () {
+      $("#dialog").dialog({
+        autoOpen: false,
+        modal: true,
+        buttons: [
+          {
+            text: "ADD",
+            click: function () {
+              if (
+                $("#title").val() === "" ||
+                $("#author").val() === "" ||
+                $("#comment").val() === ""
+              ) {
+                $("#error").html("Please enter all the fields!");
+              } else {
+                $("#title_text").html($("#title").val());
+                $("#author_text").html($("#author").val());
+                $("#comment_text").html($("#comment").val());
+                $("#title").val("");
+                $("#author").val("");
+                $("#comment").val("");
+                $("#dialog").dialog("close");
+              }
+            },
+          },
+        ],
+      });
+      $("#add").click(function () {
+        $("#dialog").dialog("open");
+      });
+    });
+  </script>
+</html>

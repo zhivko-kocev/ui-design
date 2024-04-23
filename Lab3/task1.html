@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Memory Game</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="jquery/jquery-ui.css" />
+    <script src="jquery/jquery.js"></script>
+    <script src="jquery/jquery-ui.js"></script>
+  </head>
+  <body>
+    <div id="content">
+      <div class="row">
+        <div class="item" id="0"><span>1</span></div>
+        <div class="item" id="1"><span>2</span></div>
+        <div class="item" id="2"><span>3</span></div>
+        <div class="item" id="3"><span>4</span></div>
+      </div>
+      <div class="row">
+        <div class="item" id="4"><span>5</span></div>
+        <div class="item" id="5"><span>6</span></div>
+        <div class="item" id="6"><span>7</span></div>
+        <div class="item" id="7"><span>8</span></div>
+      </div>
+      <div class="row">
+        <div class="item" id="8"><span>9</span></div>
+        <div class="item" id="9"><span>10</span></div>
+        <div class="item" id="10"><span>11</span></div>
+        <div class="item" id="11"><span>12</span></div>
+      </div>
+      <div class="row">
+        <div class="item" id="12"><span>13</span></div>
+        <div class="item" id="13"><span>14</span></div>
+        <div class="item" id="14"><span>15</span></div>
+        <div class="item" id="15"><span>16</span></div>
+      </div>
+    </div>
+    <script>
+      var data = [
+        { id: 1, name: "Lionel-Messi" },
+        { id: 2, name: "Karim-Benzema" },
+        { id: 3, name: "Luis-Suarez" },
+        { id: 4, name: "Neymar" },
+        { id: 5, name: "Ronaldinho" },
+        { id: 6, name: "Diego-Maradona" },
+        { id: 7, name: "Pele" },
+        { id: 8, name: "Zidan" },
+      ];
+      var putted = [];
+      var index = 0;
+      var cnt = 0;
+      var firstSelected = null;
+      var correct = 0;
+      var boxes = $("#content").children("div").children("div");
+
+      $(document).ready(function () {
+        for (let i = 0; i < boxes.length; i++) {
+          if (i % 2 != 0) {
+            boxes[i].style.borderColor = "red";
+          }
+        }
+
+        while (putted.length !== 16) {
+          var rand = Math.floor(Math.random() * 8);
+          if (count_occur(data[rand].name) < 2) {
+            boxes[index++].innerHTML +=
+              "<span value=" + data[rand].name + "></span>";
+            putted.push(data[rand].name);
+          }
+        }
+
+        $(".item").click(function () {
+          let name = this.children[1].getAttribute("value");
+          this.firstChild.textContent = name;
+          cnt++;
+
+          if (cnt == 2) {
+            let second = {
+              id: this.getAttribute("id"),
+              name: this.lastChild.getAttribute("value"),
+            };
+
+            if (firstSelected.id === second.id) {
+              console.log("test");
+              cnt = 1;
+              return;
+            }
+
+            setTimeout(() => {
+              if (firstSelected.name === name) {
+                boxes[firstSelected.id].style.background = "grey";
+                boxes[second.id].style.background = "grey";
+                boxes[firstSelected.id].className = "disable-div";
+                boxes[second.id].className = "disable-div";
+                firstSelected = null;
+                second = null;
+                correct++;
+                console.log(correct);
+                if (correct === 8) {
+                  document.getElementById("content").innerHTML +=
+                    "<div class='won'><p>You won</p><button onclick='reload()'>Play Again</button></div>";
+                }
+              } else {
+                boxes[firstSelected.id].firstChild.textContent =
+                  parseInt(firstSelected.id) + 1;
+                boxes[second.id].firstChild.textContent =
+                  parseInt(second.id) + 1;
+              }
+              cnt = 0;
+            }, 1500);
+          } else {
+            firstSelected = { id: this.getAttribute("id"), name: name };
+          }
+        });
+      });
+
+      function reload() {
+        document.location.reload();
+      }
+
+      function count_occur(name) {
+        let cnt = 0;
+        for (let i = 0; i < putted.length; i++) {
+          if (putted[i] === name) {
+            cnt++;
+          }
+        }
+        return cnt;
+      }
+    </script>
+  </body>
+  <style>
+    .item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 115px;
+      height: 115px;
+      background: linear-gradient(#1e5799, #7db9e8);
+      margin: 10px;
+      color: white;
+      border: 2px solid darkblue;
+    }
+    .item:hover {
+      background: linear-gradient(#dede2d, olive);
+    }
+    #content {
+      width: 600px;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .row {
+      display: flex;
+    }
+    .won {
+      position: absolute;
+      top: 250px;
+      right: 300px;
+    }
+    .disable-div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 115px;
+      height: 115px;
+      background: linear-gradient(#1e5799, #7db9e8);
+      margin: 10px;
+      color: white;
+      border: 2px solid darkblue;
+      pointer-events: none;
+    }
+  </style>
+</html>
